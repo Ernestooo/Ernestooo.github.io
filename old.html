@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>my collection</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<!-- Título principal -->
+<h1 >my collection.</h1>
+
+<!-- Texto de introdução -->
+<p>Esta plataforma é só uma mera biblioteca da minha coleção de cd’s, vinis e cassetes. Música que captiva os meus ouvidos.</p>
+
+<input type="file" id="excelInput" accept=".xlsx" style="margin-top:20px;">
+<button id="loadExcel">Carregar Excel</button>
+
+<p id="count" class="small" style="margin-top:10px;"></p>
+
+<!-- Grid da coleção -->
+
+<div class="grid-container">
+        <!-- Linha só com texto -->
+<div class="grid-text">
+        <p class="small">10 álbuns</p>
+</div>
+<div class="grid-item">
+    <img src="images/1.jpg">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Goldie</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Timeless</strong></p>
+
+    <!--  label -->
+    <p class="small">Metalheadz</p>
+
+    <!--  data -->
+      <p class="small">1995</p>
+</div>
+<div class="grid-item">
+    <img src="images/2.png">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Various</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Platinum Breakz</strong></p>
+
+    <!--  label -->
+    <p class="small">Metalheadz</p>
+
+    <!--  data -->
+      <p class="small">1996</p>
+    
+    <p>[EMPRESTADO]</p>
+</div>
+<div class="grid-item">
+    <img src="images/3.jpg">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Soichi Terada</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Sumo Jungle Grandeur</strong></p>
+
+    <!--  label -->
+    <p class="small">Far East Recordings</p>
+
+    <!--  data -->
+      <p class="small">1996</p>
+</div>
+<div class="grid-item">
+    <img src="images/4.png">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Alex Reece</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>So Far</strong></p>
+
+    <!--  label -->
+    <p class="small">4th & Broadway</p>
+
+    <!--  data -->
+      <p class="small">1996</p>
+</div>
+<div class="grid-item">
+    <img src="images/5.jpg">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Amon Tobim</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Chomp Samba</strong></p>
+
+    <!--  label -->
+    <p class="small">Ninja Tune</p>
+
+    <!--  data -->
+      <p class="small">1997</p>
+</div>
+<div class="grid-item">
+    <img src="images/6.jpg">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Amon Tobim</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Piranha Break E.P.</strong></p>
+
+    <!--  label -->
+    <p class="small">Ninja Tune</p>
+
+    <!--  data -->
+      <p class="small">1997</p>
+</div>
+<div class="grid-item">
+    <img src="images/7.jpg">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Adam F.</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Colours</strong></p>
+
+    <!--  label -->
+    <p class="small">Positive</p>
+
+    <!--  data -->
+      <p class="small">1997</p>
+</div>
+<div class="grid-item">
+    <img src="images/8.jpg">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Photek</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Ni-Ten-Ichi-Ryu</strong></p>
+
+    <!--  label -->
+    <p class="small">Science</p>
+
+    <!--  data -->
+      <p class="small">1997</p>
+</div>
+<div class="grid-item">
+    <img src="images/9.jpg">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Photek</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Modus Operandi</strong></p>
+
+    <!--  label -->
+    <p class="small">Science</p>
+
+    <!--  data -->
+      <p class="small">1997</p>
+</div>
+<div class="grid-item">
+    <img src="images/10.jpg">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Roni Size & Reprazent</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>New Form</strong></p>
+
+    <!--  label -->
+    <p class="small">Talkin' Loud</p>
+
+    <!--  data -->
+      <p class="small">1997</p>
+</div>
+<div class="grid-item">
+    <img src="images/11.png">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Goldie</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Saturn Return</strong></p>
+
+    <!--  label -->
+    <p class="small">Full Frequency Range Recording</p>
+
+    <!--  data -->
+      <p class="small">1998</p>
+</div>
+<div class="grid-item">
+    <img src="images/12.jpg">
+    
+    <!-- Nome do artista, sublinhado -->
+    <p class="small"><u>Various</u></p>
+    
+    <!-- Título do álbum, negrito -->
+    <p class="small"><strong>Points in Time 03</strong></p>
+
+    <!--  label -->
+    <p class="small">Good Looking Records</p>
+
+    <!--  data -->
+      <p class="small">1999</p>
+</div>
+</div>
+
+<!-- Contact info -->
+<h3>Contact info:</h3>
+<div class="contact-info">
+    <p class="small">Email: <a href="mailto:ivandebelemm@gmail.com">ivandebelemm@gmail.com</a></p>
+    <p class="small">Instagram: <a href="https://instagram.com/ivandrodebelem" target="_blank">@ivandrodebelem</a></p>
+    <p class="small">Soundcloud: <a href="https://soundcloud.com/ivan-crl" target="_blank">ivan-crl</a></p>
+</div>
+
+</body>
+</html>

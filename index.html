@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>my collection</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsmediatags@3.9.5/dist/jsmediatags.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="script.js" defer></script>
+    <script src="player.js" defer></script>
+</head>
+<body>
+
+    <!-- Título principal -->
+    <h1>biblioteca sonora.</h1>
+
+    <!-- Texto de introdução -->
+    <p>Esta plataforma é só uma mera biblioteca da minha coleção de cd’s, vinis e cassetes. Música que captiva os meus ouvidos.</p>
+
+    <!-- Botões de ordenação -->
+    <div class="sort-buttons">
+        <button id="sortArtist">Ordenar por Artista ▲</button>
+        <button id="sortYear">Ordenar por Ano ▲</button>
+    </div>
+
+    <!-- Grid -->
+    <div id="grid" class="grid-container"></div>
+
+    <!-- Número total de álbuns -->
+    <div id="totalAlbums" class="grid-total"></div>
+
+    <!-- Contact info -->
+    <h3>Contact info:</h3>
+    <div class="contact-info">
+        <p class="small">Email: <a href="mailto:ivandebelemm@gmail.com">ivandebelemm@gmail.com</a></p>
+        <p class="small">Instagram: <a href="https://instagram.com/ivandrodebelem" target="_blank">@ivandrodebelem</a></p>
+        <p class="small">Soundcloud: <a href="https://soundcloud.com/ivan-crl" target="_blank">ivan-crl</a></p>
+    </div>
+
+
+<!-- Miniplayer -->
+<div class="player_container">
+
+    <span id="player_title">Soichi Terada - Essential Mix 1464 BBC Radio 1 - 05 March 2022</span>
+
+     <div id="player_play_btn"></div>
+     
+    <span id="player_time_current">0:00:00</span>
+
+    <input type="range" id="player_progress" class="player_progress" value="0">
+
+    <span id="player_time_total">1:57:02</span>
+
+    <input type="range" id="player_volume" class="player_volume" min="0" max="1" step="0.01" value="1">
+
+    <audio id="audio_player" src="Soichi Terada - Essential Mix 1464 BBC Radio 1 - 05 March 2022.mp3"></audio>
+
+</div>
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+/* ----------------------------------------------------
+   FONTE PERSONALIZADA
+---------------------------------------------------- */
+@font-face {
+    font-family: 'LTF Etica Mono Regular';
+    src: url('LTF-Etica-Mono-Regular.ttf') format('truetype');
+
+    font-family: 'LTF Etica Mono Light';
+    src: url('LFTEticaMono-Light.ttf') format('truetype');
+}
+
+a {
+    color: rgb(161, 161, 161);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* ----------------------------------------------------
+   ESTILO GLOBAL
+---------------------------------------------------- */
+html {
+    font-size: 1vw;
+}
+/* ----------------------------------------------------
+   BACKGROUND 
+---------------------------------------------------- */
+
+body {
+    font-family: 'LTF Etica Mono Light', monospace;
+    background-color: #062b78; /* fallback caso a imagem não carregue */
+    color: #fffffffb;
+    margin: 0;
+    padding: 2vh 2vw;
+    cursor: url('cursor.png'), auto;
+    box-sizing: border-box;
+}
+
+/* ----------------------------------------------------
+   TÍTULO PRINCIPAL
+---------------------------------------------------- */
+h1 {
+    font-family: 'LTF Etica Mono Light', monospace;
+    font-size: 2vw;
+    border-bottom: 0.1rem dashed rgb(255, 255, 255);
+    padding-bottom: 1vh;
+}
+
+/* ----------------------------------------------------
+   PARÁGRAFOS
+---------------------------------------------------- */
+p {
+    font-size: 1vw;
+    line-height: 0.7;
+}
+
+p.small {
+    font-size: 1vw;
+    line-height: 1;
+    margin-left: 1vw;
+    word-wrap: break-word;
+}
+
+/* ----------------------------------------------------
+   SUBTÍTULOS
+---------------------------------------------------- */
+h3 {
+    font-size: 1.2vw;
+    margin-top: 1vh;
+    text-decoration: underline;
+}
+
+/* ----------------------------------------------------
+   GRID CONTAINER
+---------------------------------------------------- */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12vw, 1fr)); /* Cada item ocupa pelo menos 12vw, mas pode crescer */
+    gap: 1vw;
+    margin-top: 3vh;
+    border: 0.1rem dashed rgb(255, 255, 255);
+    padding: 1vh 1vw;
+}
+
+/* ----------------------------------------------------
+   GRID ITEM
+---------------------------------------------------- */
+.grid-item p {
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    font-size: 0.8rem;
+    text-align: left;
+    padding-left: 0.1vw;
+}
+
+/* ----------------------------------------------------
+   IMAGENS NA GRID
+---------------------------------------------------- */
+.grid-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.3rem;
+    transition: transform 0.3s ease;
+}
+
+.grid-item img:hover {
+    transform: scale(0.9);
+}
+
+/* ----------------------------------------------------
+   LINHA FINAL COM CONTAGEM DE ÁLBUNS
+---------------------------------------------------- */
+.grid-total {
+    font-size: 1vw;
+    font-weight: bold;
+    margin-top: 1vh;
+    text-align: right;
+    padding-top: 1vh;
+    color: white;
+    border-bottom: 0.1rem dashed rgb(255, 255, 255);
+}
+
+/* ----------------------------------------------------
+   BOTÕES DE ORDENAR
+---------------------------------------------------- */
+.sort-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+.sort-buttons button {
+    font-size: 0.8vw;
+    padding: 0.5vh 1vw;
+    margin-left: 1vw;
+    cursor: pointer;
+    border-radius: 0.3rem;
+    border: 0.1rem solid white;
+    background-color: #062b78;
+    color: white;
+    transition: 0.2s;
+}
+
+.sort-buttons button:hover {
+    background-color: #0a3b9c;
+}
+
+/* ------------------------------
+   PLAYER CONTAINER
+------------------------------ */
+.player_container {
+     position: fixed;          /* fixo ao viewport */
+    bottom: 0;                /* colado à parte inferior */
+    left: 50%;                /* centro horizontal */
+    transform: translateX(-50%); /* centraliza realmente */
+    width: auto;              /* ajusta à largura do conteúdo */
+    max-width: 90vw;          /* nunca ultrapassa 90% da largura da tela */
+    background-color: rgba(0,0,0,0.8);
+    padding: 0.5vh 1vw;
+    border-radius: 0.5vh 0.5vh 0 0; /* cantos arredondados só em cima */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* centraliza conteúdo dentro do player */
+    gap: 0.5vw;
+    z-index: 9999;
+    font-size: 0.9vw;
+}
+
+/* Botão triangular de play */
+#player_play_btn {
+    width: 0.01vw;
+    height: 0.01vw;
+    border-left: 1vw solid white;
+    border-top: 0.5vw solid transparent;
+    border-bottom: 0.5vw solid transparent;
+    cursor: pointer;
+}
+
+/* ------------------------------
+   TRACK PROGRESS SLIDER (GRANDE)
+------------------------------ */
+.player_progress {
+    appearance: none;
+    width: 16vw;               /* maior */
+    height: 0.5vh;
+    background: black;
+    border-radius: 1vh;
+    cursor: pointer;
+    outline: none;
+}
+
+/* WebKit */
+.player_progress::-webkit-slider-runnable-track {
+    height: 0.5vh;
+    background: transparent;   /* controlado pelo JS */
+}
+.player_progress::-webkit-slider-thumb {
+    appearance: none;
+    width: 1.1vh;
+    height: 1.1vh;
+    background: white;
+    border-radius: 50%;
+    margin-top: -0.3vh;
+}
+
+/* Firefox */
+.player_progress::-moz-range-track {
+    background: transparent;
+}
+.player_progress::-moz-range-progress {
+    background: white;
+}
+.player_progress::-moz-range-thumb {
+    width: 1.1vh;
+    height: 1.1vh;
+    background: white;
+    border-radius: 50%;
+}
+
+
+/* ------------------------------
+   VOLUME SLIDER (1/3)
+------------------------------ */
+.player_volume {
+    appearance: none;
+    width: 5vw;                /* 1/3 do track */
+    height: 0.5vh;
+    background: black;
+    border-radius: 1vh;
+    cursor: pointer;
+    outline: none;
+}
+
+/* WebKit */
+.player_volume::-webkit-slider-runnable-track {
+    background: transparent;
+    height: 0.5vh;
+}
+.player_volume::-webkit-slider-thumb {
+    appearance: none;
+    width: 1vh;
+    height: 1vh;
+    background: white;
+    border-radius: 50%;
+    margin-top: -0.3vh;
+}
+
+/* Firefox */
+.player_volume::-moz-range-track {
+    background: transparent;
+}
+.player_volume::-moz-range-progress {
+    background: white;
+}
+.player_volume::-moz-range-thumb {
+    width: 1vh;
+    height: 1vh;
+    background: white;
+    border-radius: 50%;
+}
