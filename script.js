@@ -13,21 +13,35 @@ let sortState = {
 };
 
 // ==================================================
-// Carregar Excel
+// Carregar Excel (sem cabeçalhos)
 // ==================================================
 async function loadExcel() {
-    const response = await fetch("albums.xlsx");
-    const buffer = await response.arrayBuffer();
-    const workbook = XLSX.read(buffer, { type: "array" });
+    try {
+        const response = await fetch("albums.xlsx");
+        const buffer = await response.arrayBuffer();
+        const workbook = XLSX.read(buffer, { type: "array" });
 
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const json = XLSX.utils.sheet_to_json(sheet, { defval: "" }); // <-- gera objetos
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const json = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "" });
 
-    albumData = json; 
-    filteredData = albumData.slice(); // <-- inicializa filteredData
+        // Transformar array de arrays em array de objetos com colunas fixas
+        albumData = json.map(a => ({
+            Artist: a[0],
+            Album: a[1],
+            Label: a[2],
+            Year: a[3],
+            Genre: a[4],
+            Format: a[5],
+            Image: a[6]
+        }));
 
-    populateFilters(albumData); // <-- gera filtros com opções do Excel
-    renderGrid(filteredData); 
+        filteredData = albumData.slice();
+
+        populateFilters(albumData);
+        renderGrid(filteredData);
+    } catch (err) {
+        console.error("Erro ao carregar o Excel:", err);
+    }
 }
 
 // ==================================================
@@ -38,14 +52,14 @@ function renderGrid(data) {
     grid.innerHTML = "";
 
     data.forEach(a => {
-        let img = a.Image || ""; // supondo que a coluna da imagem se chama "Image"
+        let img = a.Image || "";
         if (img && !img.includes(".")) img += ".jpg";
 
         const item = document.createElement("div");
         item.className = "grid-item";
 
         item.innerHTML = `
-            <img src="images/${img}">
+            <img src="images/${img}" alt="${a.Album}">
             <p class="small"><u>${a.Artist}</u></p>
             <p class="small"><strong>${a.Album}</strong></p>
             <p class="small">${a.Label}</p>
@@ -60,11 +74,12 @@ function renderGrid(data) {
 }
 
 // ==================================================
-// Criar filtros
+// Criar filtros dinâmicos
 // ==================================================
 function populateFilters(data) {
     const genreSet = new Set();
     const formatSet = new Set();
+
     data.forEach(a => {
         if (a.Genre) genreSet.add(a.Genre);
         if (a.Format) formatSet.add(a.Format);
@@ -73,7 +88,6 @@ function populateFilters(data) {
     const genreFilter = document.getElementById("genreFilter");
     const formatFilter = document.getElementById("formatFilter");
 
-    // Limpar opções antigas
     genreFilter.innerHTML = `<option value="TUDO">TODOS</option>`;
     formatFilter.innerHTML = `<option value="TUDO">TODOS</option>`;
 
