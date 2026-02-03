@@ -1,85 +1,129 @@
 // ==================================================
 // Variáveis globais
 // ==================================================
-let albumData = []; // dados do Excel
+let albumData = [];
+let filteredData = [];
+
+let currentGenre = "TUDO";
+let currentFormat = "TUDO";
+
 let sortState = {
-    artist: 'asc', // 'asc' = crescente, 'desc' = decrescente
-    year: 'asc'
+    artist: "asc",
+    year: "asc"
 };
 
 // ==================================================
-// Função para carregar o Excel interno
+// Carregar Excel
 // ==================================================
 async function loadExcel() {
-    const response = await fetch('albums.xlsx'); // ficheiro Excel na pasta
-    const arrayBuffer = await response.arrayBuffer();
-    const data = new Uint8Array(arrayBuffer);
-    const workbook = XLSX.read(data, { type: "array" });
+    const response = await fetch("albums.xlsx");
+    const buffer = await response.arrayBuffer();
+    const workbook = XLSX.read(buffer, { type: "array" });
 
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
-    const json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const json = XLSX.utils.sheet_to_json(sheet, { defval: "" }); // <-- gera objetos
 
-    albumData = json; // guarda globalmente
-    renderGrid(albumData); // renderiza a grid
+    albumData = json; 
+    filteredData = albumData.slice(); // <-- inicializa filteredData
+
+    populateFilters(albumData); // <-- gera filtros com opções do Excel
+    renderGrid(filteredData); 
 }
 
 // ==================================================
-// Renderiza a grid
+// Renderizar grid
 // ==================================================
 function renderGrid(data) {
     const grid = document.getElementById("grid");
-    grid.innerHTML = ""; // limpa a grid
+    grid.innerHTML = "";
 
-    data.forEach(row => {
+    data.forEach(a => {
+        let img = a.Image || ""; // supondo que a coluna da imagem se chama "Image"
+        if (img && !img.includes(".")) img += ".jpg";
+
         const item = document.createElement("div");
         item.className = "grid-item";
 
-        let imgSrc = row[0];
-        if (!imgSrc.includes('.')) {
-            imgSrc = `${imgSrc}.jpg`;
-        }
-
         item.innerHTML = `
-            <img src="images/${imgSrc}">
-            <p class="small"><u>${row[1]}</u></p>
-            <p class="small"><strong>${row[2]}</strong></p>
-            <p class="small">${row[3]}</p>
-            <p class="small">${row[4]}</p>
+            <img src="images/${img}">
+            <p class="small"><u>${a.Artist}</u></p>
+            <p class="small"><strong>${a.Album}</strong></p>
+            <p class="small">${a.Label}</p>
+            <p class="small">${a.Year}</p>
         `;
+
         grid.appendChild(item);
     });
 
-    // Atualiza o número total de álbuns fora da grid
-    const totalDiv = document.getElementById("totalAlbums");
-    totalDiv.innerHTML = `<p class="small">${data.length} álbuns</p>`;
+    document.getElementById("totalAlbums").innerHTML =
+        `<p class="small">${data.length} álbuns</p>`;
 }
 
 // ==================================================
-// Event listeners dos botões de ordenação
+// Criar filtros
+// ==================================================
+function populateFilters(data) {
+    const genreSet = new Set();
+    const formatSet = new Set();
+    data.forEach(a => {
+        if (a.Genre) genreSet.add(a.Genre);
+        if (a.Format) formatSet.add(a.Format);
+    });
+
+    const genreFilter = document.getElementById("genreFilter");
+    const formatFilter = document.getElementById("formatFilter");
+
+    // Limpar opções antigas
+    genreFilter.innerHTML = `<option value="TUDO">TODOS</option>`;
+    formatFilter.innerHTML = `<option value="TUDO">TODOS</option>`;
+
+    genreSet.forEach(g => genreFilter.innerHTML += `<option value="${g}">${g}</option>`);
+    formatSet.forEach(f => formatFilter.innerHTML += `<option value="${f}">${f}</option>`);
+}
+
+// ==================================================
+// Aplicar filtros
+// ==================================================
+function applyFilters() {
+    filteredData = albumData.filter(a => {
+        const genreMatch = currentGenre === "TUDO" || a.Genre === currentGenre;
+        const formatMatch = currentFormat === "TUDO" || a.Format === currentFormat;
+        return genreMatch && formatMatch;
+    });
+    renderGrid(filteredData);
+}
+
+// ==================================================
+// Listeners filtros
+// ==================================================
+document.getElementById("genreFilter").addEventListener("change", e => {
+    currentGenre = e.target.value;
+    applyFilters();
+});
+
+document.getElementById("formatFilter").addEventListener("change", e => {
+    currentFormat = e.target.value;
+    applyFilters();
+});
+
+// ==================================================
+// Ordenação
 // ==================================================
 document.getElementById("sortArtist").addEventListener("click", () => {
-    const direction = sortState.artist === 'asc' ? 1 : -1;
-    const sorted = [...albumData].sort((a, b) => a[1].localeCompare(b[1]) * direction);
-    renderGrid(sorted);
-
-    // alterna estado e atualiza seta
-    sortState.artist = sortState.artist === 'asc' ? 'desc' : 'asc';
-    document.getElementById("sortArtist").textContent = `Ordenar por Artista ${sortState.artist === 'asc' ? '▲' : '▼'}`;
+    const dir = sortState.artist === "asc" ? 1 : -1;
+    filteredData.sort((a, b) => a.Artist.localeCompare(b.Artist) * dir);
+    sortState.artist = sortState.artist === "asc" ? "desc" : "asc";
+    renderGrid(filteredData);
 });
 
 document.getElementById("sortYear").addEventListener("click", () => {
-    const direction = sortState.year === 'asc' ? 1 : -1;
-    const sorted = [...albumData].sort((a, b) => (a[4] - b[4]) * direction);
-    renderGrid(sorted);
-
-    // alterna estado e atualiza seta
-    sortState.year = sortState.year === 'asc' ? 'desc' : 'asc';
-    document.getElementById("sortYear").textContent = `Ordenar por Ano ${sortState.year === 'asc' ? '▲' : '▼'}`;
+    const dir = sortState.year === "asc" ? 1 : -1;
+    filteredData.sort((a, b) => (a.Year - b.Year) * dir);
+    sortState.year = sortState.year === "asc" ? "desc" : "asc";
+    renderGrid(filteredData);
 });
 
 // ==================================================
-// Inicializa
+// Init
 // ==================================================
 loadExcel();
-

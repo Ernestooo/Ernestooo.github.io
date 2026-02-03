@@ -22,12 +22,36 @@
     <!-- Texto de introdução -->
     <p>Esta plataforma é só uma mera biblioteca da minha coleção de cd’s, vinis e cassetes. Música que captiva os meus ouvidos.</p>
 
-    <!-- Botões de ordenação -->
-    <div class="sort-buttons">
-        <button id="sortArtist">Ordenar por Artista ▲</button>
-        <button id="sortYear">Ordenar por Ano ▲</button>
-    </div>
+    <!-- Controls -->
+    <div class="controls">
 
+        <!-- Filtros -->
+        <div class="filters">
+
+            <div class="filter-block">
+                <label>Género</label>
+                <select id="genreFilter">
+                    <option value="TUDO">TODOS</option>
+                </select>
+            </div>
+
+            <div class="filter-block">
+                <label>Formato</label>
+                <select id="formatFilter">
+                    <option value="TUDO">TODOS</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- Ordenação -->
+        <div class="sort-buttons">
+            <button id="sortArtist">Ordenar por Artista ▲</button>
+            <button id="sortYear">Ordenar por Ano ▲</button>
+        </div>
+
+    </div>
+    
     <!-- Grid -->
     <div id="grid" class="grid-container"></div>
 
@@ -63,6 +87,6 @@
 </div>
 
 
-</script>
+
 </body>
 </html>
