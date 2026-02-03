@@ -26,13 +26,13 @@ async function loadExcel() {
 
         // Transformar array de arrays em array de objetos com colunas fixas
         albumData = json.map(a => ({
-            Artist: a[0],
-            Album: a[1],
-            Label: a[2],
-            Year: a[3],
-            Genre: a[4],
-            Format: a[5],
-            Image: a[6]
+            Image: a[0],
+            Artist: a[1],
+            Album: a[2],
+            Label: a[3],
+            Year: a[4],
+            Genre: a[5],
+            Format: a[6],
         }));
 
         filteredData = albumData.slice();
@@ -81,8 +81,21 @@ function populateFilters(data) {
     const formatSet = new Set();
 
     data.forEach(a => {
-        if (a.Genre) genreSet.add(a.Genre);
-        if (a.Format) formatSet.add(a.Format);
+        // Separar múltiplos géneros por vírgula e adicionar individualmente
+        if (a.Genre) {
+            a.Genre.split(",").forEach(g => {
+                const genre = g.trim(); // remove espaços antes/depois
+                if (genre) genreSet.add(genre);
+            });
+        }
+
+        // Separar múltiplos formatos por vírgula (opcional)
+        if (a.Format) {
+            a.Format.split(",").forEach(f => {
+                const format = f.trim();
+                if (format) formatSet.add(format);
+            });
+        }
     });
 
     const genreFilter = document.getElementById("genreFilter");
