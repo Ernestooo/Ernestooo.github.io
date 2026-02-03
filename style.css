@@ -140,7 +140,8 @@ h3 {
 ---------------------------------------------------- */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12vw, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(12vw, 12vw)); /* largura fixa mínima */
+    justify-content: start;  /* alinha à esquerda se houver poucos items */
     gap: 1vw;
     margin-top: 3vh;
     border: 0.1rem dashed rgb(255, 255, 255);
