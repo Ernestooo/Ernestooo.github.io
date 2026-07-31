@@ -38,6 +38,7 @@ async function loadExcel() {
         filteredData = albumData.slice();
 
         populateFilters(albumData);
+        updateStatistics();
         renderGrid(filteredData);
     } catch (err) {
         console.error("Erro ao carregar o Excel:", err);
@@ -149,6 +150,108 @@ document.getElementById("sortYear").addEventListener("click", () => {
     sortState.year = sortState.year === "asc" ? "desc" : "asc";
     renderGrid(filteredData);
 });
+
+// ==================================================
+// Collection Stats
+// ==================================================
+function updateStatistics(){
+
+    // ===== Artists (ignora Various) =====
+    const artistSet = new Set();
+
+    albumData.forEach(album => {
+
+        const artist = String(album.Artist).trim();
+
+        if(
+            artist !== "" &&
+            artist.toLowerCase() !== "various"
+        ){
+            artistSet.add(artist);
+        }
+
+    });
+
+    // ===== Years =====
+    const years = albumData
+        .map(album => Number(album.Year))
+        .filter(year => !isNaN(year));
+
+    // ===== Median =====
+    const sortedYears = [...years].sort((a,b)=>a-b);
+
+    let medianYear;
+
+    if(sortedYears.length % 2 === 0){
+
+        medianYear =
+            (
+                sortedYears[sortedYears.length/2 -1] +
+                sortedYears[sortedYears.length/2]
+            ) / 2;
+
+    }else{
+
+        medianYear =
+            sortedYears[Math.floor(sortedYears.length/2)];
+
+    }
+
+    // ===== Average Age =====
+    const currentYear = new Date().getFullYear();
+
+    const averageAge =
+        years.reduce((sum,year)=>sum+(currentYear-year),0)
+        / years.length;
+
+    // ===== Span =====
+    const oldest = Math.min(...years);
+    const newest = Math.max(...years);
+
+    // ===== Peak Decade =====
+    const decades = {};
+
+    years.forEach(year=>{
+
+        const decade = Math.floor(year/10)*10;
+
+        decades[decade] = (decades[decade] || 0) + 1;
+
+    });
+
+    let peakDecade = "";
+
+    let max = 0;
+
+    for(const decade in decades){
+
+        if(decades[decade] > max){
+
+            max = decades[decade];
+            peakDecade = decade;
+
+        }
+
+    }
+
+    // ===== Mostrar =====
+
+    document.getElementById("statArtists").textContent =
+        artistSet.size;
+
+    document.getElementById("statMedian").textContent =
+        medianYear;
+
+    document.getElementById("statAge").textContent =
+        averageAge.toFixed(1) + " years";
+
+    document.getElementById("statSpan").textContent =
+        oldest + "–" + newest;
+
+    document.getElementById("statDecade").textContent =
+        peakDecade + "s";
+
+}
 
 // ==================================================
 // Init

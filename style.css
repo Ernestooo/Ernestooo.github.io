@@ -259,6 +259,25 @@ h3 {
 .player_volume::-moz-range-progress { background: white; }
 .player_volume::-moz-range-thumb { width: 1vh; height: 1vh; background: white; border-radius: 50%; }
 
+/* Collection Stats */
+.collection-stats{
+    width:25vw;
+    margin-bottom:2vh;
+}
+
+.collection-stats p{
+    display:flex;
+    justify-content:space-between;
+    margin:0.35vh 0;
+    font-size:0.9vw;
+    line-height:1.4;
+}
+
+.collection-stats span:last-child{
+    font-family:'LTF Etica Mono Regular', monospace;
+}
+
+
 /* ----------------------------------------------------
    SPLASH PAGE
 ---------------------------------------------------- */
@@ -284,4 +303,6 @@ h3 {
 
 #splash img:hover {
     transform: scale(1.05);
+
+
 }
