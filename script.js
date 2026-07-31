@@ -71,9 +71,6 @@ function renderGrid(data) {
 
         grid.appendChild(item);
     });
-
-    document.getElementById("totalAlbums").innerHTML =
-        `<p class="small">${data.length} álbuns</p>`;
 }
 
 // ==================================================
