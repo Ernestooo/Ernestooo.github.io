@@ -261,19 +261,30 @@ h3 {
 
 /* Collection Stats */
 .collection-stats{
-    width:25vw;
-    margin-bottom:2vh;
+    width:100%;
+    margin:2vh 0;
 }
 
-.collection-stats p{
+.stat-row{
     display:flex;
-    justify-content:space-between;
-    margin:0.35vh 0;
+    align-items:center;
     font-size:0.9vw;
-    line-height:1.4;
+    margin:0.35vh 0;
 }
 
-.collection-stats span:last-child{
+.stat-label{
+    white-space:nowrap;
+}
+
+.stat-row::after{
+    content:"";
+    flex:1;
+    border-bottom:1px dotted white;
+    margin:0 0.5vw;
+}
+
+.stat-value{
+    white-space:nowrap;
     font-family:'LTF Etica Mono Regular', monospace;
 }
 

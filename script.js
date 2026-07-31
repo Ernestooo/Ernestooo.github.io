@@ -52,6 +52,8 @@ function renderGrid(data) {
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
 
+    document.getElementById("statAlbums").textContent = data.length;
+
     data.forEach(a => {
         let img = a.Image || "";
         if (img && !img.includes(".")) img += ".jpg";
